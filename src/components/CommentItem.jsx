@@ -1,8 +1,10 @@
 import { useState } from "react"
+import Card from "./Card";
+import {FaTrashAlt} from 'react-icons/fa';
 
-function CommentItem() {
-    const [rating, setRating] = useState(0);
-    const [text, setText] = useState('Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae, eaque!');
+function CommentItem({commentData, isOddItem, onDeleteComment}) {
+    const [rating, setRating] = useState(commentData.rating);
+    const [text, setText] = useState(commentData.commentText);
 
     const likeComment = () => {
         // ! STATE-ovi su imutabilni sto znaci da za njihovo menjanje morate koristiti SET-ere, tj ne mozete direktno njih menjati (npr. rating = 5)
@@ -17,12 +19,18 @@ function CommentItem() {
         });
     }
 
+    const deleteComment = (id) => {
+       // alert(id); // ! radi
+       onDeleteComment(id);
+    }
+
     const modifyText = () => {
         setText('Existing comment has been changed to this value.');
     }
 
     return (
-        <div className="card">
+        <Card darkMode={isOddItem}>
+            <FaTrashAlt className="delete-btn-custom" onClick={() => deleteComment(commentData.id)} />
             <div className="grade-number">{rating} <span onClick={likeComment}>👍</span></div>
             <div className="grade-number dislike"><span onClick={dislikeComment}>👎</span></div>
             <div className="grade-text">
@@ -31,7 +39,7 @@ function CommentItem() {
             <button className="card-btn" onClick={modifyText}>
                 Change Text
             </button>
-        </div>
+        </Card>
     )
 }
 

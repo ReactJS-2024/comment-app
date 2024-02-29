@@ -23,10 +23,15 @@
 
 .card {
   border: 1px solid black;
-  padding: 25px 50px;
-  width: 50%;
+  padding: 60px 50px;
+  width: 80%;
   position: relative;
   background-color: bisque;
+  margin-bottom: 15px;
+}
+
+.card.dark-mode {
+  background-color: rgb(234, 163, 77);
 }
 
 .card .grade-number {
@@ -51,4 +56,22 @@
   margin: 0 auto;
   margin-top: 10px;
   width: 150px;
+}
+
+.comments-list {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-btn-custom {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+}
+
+.delete-btn-custom:hover {
+  cursor: pointer;
 }
