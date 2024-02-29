@@ -75,3 +75,11 @@
 .delete-btn-custom:hover {
   cursor: pointer;
 }
+
+.comments-rating {
+  border: 1px solid white;
+  padding: 20px;
+  margin-bottom: 15px;
+  text-align: center;
+  box-shadow: 3px 3px 3px gray inset;
+}

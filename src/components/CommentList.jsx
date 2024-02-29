@@ -1,9 +1,11 @@
 import CommentItem from "./CommentItem"
+import CommentRating from "./CommentRating"
 
 
 function CommentList({comments, onDeleteComment}) {
     return (
         <ul className="comments-list">
+            <CommentRating comments={comments} />
             {
                 comments.map((comment, i) => {
                     return <CommentItem 
