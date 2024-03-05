@@ -52,7 +52,7 @@
   cursor: pointer;
 }
 
-.card .card-btn {
+.card .card-btn, .custom-btn {
   margin: 0 auto;
   margin-top: 10px;
   width: 150px;

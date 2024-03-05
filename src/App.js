@@ -6,6 +6,7 @@ import CommentList from './components/CommentList';
 
 function App() {
   const [comments, setComments] = useState(CommentsMockData);
+
   const onDeleteComment = (id) => {
     if (!window.confirm('Please confirm deletion of this comment')) {
       return;
@@ -41,6 +42,11 @@ function App() {
     );
   }
 
+  const onPostComment = (newComment) => {
+    setComments([newComment, ...comments]); // kreiranje novog niza dodavanjem novog komentara i spread-ovanjem starih
+    alert('You have added new comment!');
+  }
+
   return (
     <>
       <Header headerText='Comment App' />
@@ -55,6 +61,7 @@ function App() {
             (
               <CommentList
                 comments={comments} 
+                onPostComment={onPostComment}
                 onLikeComment={onLikeComment}
                 onDislikeComment={onDislikeComment}
                 onDeleteComment={onDeleteComment} />

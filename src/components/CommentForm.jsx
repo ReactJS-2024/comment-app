@@ -1,8 +1,9 @@
 import { useState } from "react";
+import { v4 as uuidv4 } from 'uuid';
 import Card from "./Card";
 import Button from "./Button";
 
-function CommentForm() {
+function CommentForm({onPostComment}) {
 
     const [commentText, setCommentText] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
@@ -19,11 +20,12 @@ function CommentForm() {
     const handlePostComment = (e) => {
         e.preventDefault(); // ! prevent-uje (zaustavlja) default ponasanje submit-ovanja standardnih HTML formi
         const newComment = {
-            // id: postaviti na vrednost uuid generisanja
+            id: uuidv4(),
             rating: 0,
             commentText
         }
-        console.log(newComment);
+        onPostComment(newComment);
+        setCommentText('');
     }
 
     return (
