@@ -12,6 +12,35 @@ function App() {
     }
     setComments(currentComments => currentComments.filter(c => c.id !== id));
   }
+
+  const onLikeComment = (id) => {
+    setComments((prevComments) =>
+      prevComments.map((comment) => {
+        if (comment.id === id) {
+          return {
+            ...comment,
+            rating: comment.rating + 1
+          };
+        }
+        return comment;
+      })
+    );
+  };
+
+  const onDislikeComment = (id) => {
+    setComments((prevComments) =>
+      prevComments.map((comment) => {
+        if (comment.id === id) {
+          return {
+            ...comment,
+            rating: comment.rating - 1
+          };
+        }
+        return comment;
+      })
+    );
+  }
+
   return (
     <>
       <Header headerText='Comment App' />
@@ -26,6 +55,8 @@ function App() {
             (
               <CommentList
                 comments={comments} 
+                onLikeComment={onLikeComment}
+                onDislikeComment={onDislikeComment}
                 onDeleteComment={onDeleteComment} />
             )
           }

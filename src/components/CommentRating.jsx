@@ -8,7 +8,7 @@ function CommentRating({comments}) {
     return (
       <div className="comments-rating">
           <p>Total number of likes: <span>{total}</span> </p>
-          <p>Average rating of likes: <span>{average}</span></p>
+          <p>Average rating of likes: <span>{average.toFixed(1)}</span></p>
       </div>
     )
 }

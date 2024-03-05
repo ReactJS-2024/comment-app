@@ -2,7 +2,7 @@ import CommentItem from "./CommentItem"
 import CommentRating from "./CommentRating"
 
 
-function CommentList({comments, onDeleteComment}) {
+function CommentList({comments, onDeleteComment, onLikeComment, onDislikeComment}) {
     return (
         <ul className="comments-list">
             <CommentRating comments={comments} />
@@ -12,6 +12,8 @@ function CommentList({comments, onDeleteComment}) {
                         key={comment.id}
                         commentData={comment} 
                         isOddItem={i%2 !== 0} 
+                        onLikeComment={(id) => {onLikeComment(id)}}
+                        onDislikeComment={(id) => {onDislikeComment(id)}}
                         onDeleteComment={(id) => {onDeleteComment(id)}}
                     />
                 })
