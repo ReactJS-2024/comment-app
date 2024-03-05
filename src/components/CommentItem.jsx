@@ -1,6 +1,7 @@
 import { useState } from "react"
 import Card from "./Card";
 import {FaTrashAlt} from 'react-icons/fa';
+import Button from "./Button";
 
 function CommentItem({commentData, isOddItem, onDeleteComment, onLikeComment, onDislikeComment}) {
     const [rating, setRating] = useState(commentData.rating);
@@ -37,9 +38,11 @@ function CommentItem({commentData, isOddItem, onDeleteComment, onLikeComment, on
             <div className="grade-text">
                 <p>{text}</p>
             </div>
-            <button className="card-btn" onClick={modifyText}>
-                Change Text
-            </button>
+            {/* TODO add class name (card-btn) */}
+            <Button 
+                children={'Change Text'}
+                onClick={modifyText}
+            />
         </Card>
     )
 }

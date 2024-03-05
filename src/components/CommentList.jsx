@@ -1,3 +1,4 @@
+import CommentForm from "./CommentForm"
 import CommentItem from "./CommentItem"
 import CommentRating from "./CommentRating"
 
@@ -6,6 +7,7 @@ function CommentList({comments, onDeleteComment, onLikeComment, onDislikeComment
     return (
         <ul className="comments-list">
             <CommentRating comments={comments} />
+            <CommentForm />
             {
                 comments.map((comment, i) => {
                     return <CommentItem 
