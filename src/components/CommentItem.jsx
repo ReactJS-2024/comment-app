@@ -6,20 +6,29 @@ import Button from "./Button";
 function CommentItem({commentData, isOddItem, onDeleteComment, onLikeComment, onDislikeComment}) {
     const [rating, setRating] = useState(commentData.rating);
     const [text, setText] = useState(commentData.commentText);
+    const [isCommentLiked, setIsCommentLiked] = useState(false);
+    const [isCommentDisliked, setIsCommentDisliked] = useState(false);
 
     const likeComment = (commentId) => {
-        // ! STATE-ovi su imutabilni sto znaci da za njihovo menjanje morate koristiti SET-ere, tj ne mozete direktno njih menjati (npr. rating = 5)
-        setRating((prevVal) => {
-            return prevVal + 1;
-        });
-        onLikeComment(commentId);
+        if (!isCommentLiked) {
+            setRating((prevVal) => {
+                return prevVal + 1;
+            });
+            onLikeComment(commentId);
+            setIsCommentLiked(true);
+            setIsCommentDisliked(false);
+        }
     }
 
     const dislikeComment = (commentId) => {
-        setRating((prevVal) => {
-            return prevVal - 1;
-        });
-        onDislikeComment(commentId);
+        if (!isCommentDisliked) {
+            setRating((prevVal) => {
+                return prevVal - 1;
+            });
+            onDislikeComment(commentId);
+            setIsCommentDisliked(true);
+            setIsCommentLiked(false);
+        }
     }
 
     const deleteComment = (id) => {
@@ -33,8 +42,23 @@ function CommentItem({commentData, isOddItem, onDeleteComment, onLikeComment, on
     return (
         <Card darkMode={isOddItem}>
             <FaTrashAlt className="delete-btn-custom" onClick={() => deleteComment(commentData.id)} />
-            <div className="grade-number">{rating} <span onClick={() => likeComment(commentData.id)}>👍</span></div>
-            <div className="grade-number dislike"><span onClick={() => dislikeComment(commentData.id)}>👎</span></div>
+            <div className="grade-number">
+                {rating} 
+                <button 
+                    className="like-btn"
+                    disabled={isCommentLiked}
+                    onClick={() => likeComment(commentData.id)}>
+                    👍
+                </button>
+            </div>
+            <div className="grade-number dislike">
+                <button
+                    className="like-btn"
+                    disabled={isCommentDisliked}
+                    onClick={() => dislikeComment(commentData.id)}>
+                    👎
+                </button>
+            </div>
             <div className="grade-text">
                 <p>{text}</p>
             </div>

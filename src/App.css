@@ -27,6 +27,7 @@
   width: 80%;
   position: relative;
   background-color: bisque;
+  margin: 0 auto;
   margin-bottom: 15px;
 }
 
@@ -119,4 +120,38 @@ button:hover {
   margin-top: 5px;
   color: red;
   font-weight: bold;
+}
+
+.about-wrapper {
+  text-align: center;
+  margin: 0 auto;
+}
+
+.back-to-home-link a {
+  text-decoration: none;
+  margin-top: 25px;
+}
+
+.nav-links {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+.nav-links__item.active {
+  color: black;
+  background-color: white;
+  padding: 5px;
+}
+
+.like-btn {
+  background-color: transparent;
+  border: none;
+  outline: none;
 }

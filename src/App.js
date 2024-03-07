@@ -1,8 +1,11 @@
 import { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Header from './components/Header';
 import CommentsMockData from './mockData/CommentsMockData';
 import CommentList from './components/CommentList';
+import About from './pages/About';
+import PostDetails from './components/PostDetails';
 
 function App() {
   const [comments, setComments] = useState(CommentsMockData);
@@ -48,28 +51,38 @@ function App() {
   }
 
   return (
-    <>
+    <Router>
       <Header headerText='Comment App' />
       <div className='container'>
-        <h3>Please share your comment with us</h3>
-        <div className='comments'>
-          {
-            !comments || !comments.length 
-            ? (
-              <h1>No comments to display!</h1>
-            ) :
-            (
-              <CommentList
-                comments={comments} 
-                onPostComment={onPostComment}
-                onLikeComment={onLikeComment}
-                onDislikeComment={onDislikeComment}
-                onDeleteComment={onDeleteComment} />
-            )
-          }
-        </div>
+        <Routes>
+          {/* Primer lose upotrebe Route tag-a (jer sam u Route tag-u postavio komplet HTML sadrzaj) */}
+          <Route path='/' element={
+            <>
+              <h3>Please share your comment with us</h3>
+              <div className='comments'>
+                {
+                  !comments || !comments.length 
+                  ? (
+                    <h1>No comments to display!</h1>
+                  ) :
+                  (
+                    <CommentList
+                      comments={comments} 
+                      onPostComment={onPostComment}
+                      onLikeComment={onLikeComment}
+                      onDislikeComment={onDislikeComment}
+                      onDeleteComment={onDeleteComment} />
+                  )
+                }
+              </div>
+            </>
+          }>
+          </Route>
+          <Route path='/about' element={<About />} />
+          <Route path='/post/:postId' element={<PostDetails />} />
+        </Routes>
       </div>
-    </>
+    </Router>
   )
 }
 
