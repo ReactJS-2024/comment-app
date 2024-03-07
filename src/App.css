@@ -127,7 +127,7 @@ button:hover {
   margin: 0 auto;
 }
 
-.back-to-home-link a {
+.back-to-home-link {
   text-decoration: none;
   margin-top: 25px;
 }

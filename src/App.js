@@ -6,6 +6,7 @@ import CommentsMockData from './mockData/CommentsMockData';
 import CommentList from './components/CommentList';
 import About from './pages/About';
 import PostDetails from './components/PostDetails';
+import NotFound from './pages/NotFound';
 
 function App() {
   const [comments, setComments] = useState(CommentsMockData);
@@ -80,6 +81,7 @@ function App() {
           </Route>
           <Route path='/about' element={<About />} />
           <Route path='/post/:postId' element={<PostDetails />} />
+          <Route path='/*' element={<NotFound />} />
         </Routes>
       </div>
     </Router>
