@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import Card from "./Card";
 import Button from "./Button";
+import CommentContext from "../context/CommentContext";
 
-function CommentForm({onPostComment}) {
+function CommentForm() {
 
+    const {onPostComment} = useContext(CommentContext);
     const [commentText, setCommentText] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
 

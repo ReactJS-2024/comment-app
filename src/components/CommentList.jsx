@@ -1,24 +1,34 @@
+import { useContext } from "react"
 import CommentForm from "./CommentForm"
 import CommentItem from "./CommentItem"
 import CommentRating from "./CommentRating"
+import CommentContext from "../context/CommentContext"
 
 
-function CommentList({comments, onDeleteComment, onLikeComment, onDislikeComment, onPostComment}) {
+function CommentList() {
+
+    const {comments} = useContext(CommentContext);
+
     return (
         <ul className="comments-list">
-            <CommentRating comments={comments} />
-            <CommentForm onPostComment={(newComment) => {onPostComment(newComment)}} />
+            <CommentRating />
+            <CommentForm/>
             {
-                comments.map((comment, i) => {
-                    return <CommentItem 
-                        key={comment.id}
-                        commentData={comment} 
-                        isOddItem={i%2 !== 0} 
-                        onLikeComment={(id) => {onLikeComment(id)}}
-                        onDislikeComment={(id) => {onDislikeComment(id)}}
-                        onDeleteComment={(id) => {onDeleteComment(id)}}
-                    />
-                })
+                
+                !comments || !comments.length 
+                ? (
+                    <h1>No comments to display!</h1>
+                ) :
+                (
+                    comments.map((comment, i) => {
+                        return <CommentItem 
+                            key={comment.id}
+                            commentData={comment} 
+                            isOddItem={i%2 !== 0}
+                        />
+                    })
+                )
+                  
             }
         </ul>
     )

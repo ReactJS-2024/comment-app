@@ -1,9 +1,12 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import Card from "./Card";
 import {FaTrashAlt} from 'react-icons/fa';
 import Button from "./Button";
+import CommentContext from "../context/CommentContext";
 
-function CommentItem({commentData, isOddItem, onDeleteComment, onLikeComment, onDislikeComment}) {
+function CommentItem({commentData, isOddItem}) {
+
+    const {onDeleteComment, onLikeComment, onDislikeComment} = useContext(CommentContext);
     const [rating, setRating] = useState(commentData.rating);
     const [text, setText] = useState(commentData.commentText);
     const [isCommentLiked, setIsCommentLiked] = useState(false);
