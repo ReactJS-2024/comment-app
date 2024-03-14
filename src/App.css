@@ -67,13 +67,21 @@
   justify-content: center;
 }
 
-.delete-btn-custom {
+.delete-btn-custom,
+.edit-btn-custom {
   position: absolute;
   top: 5px;
   left: 5px;
 }
 
-.delete-btn-custom:hover {
+.edit-btn-custom {
+  left: 30px;
+  color: black;
+  font-size: 18px;
+}
+
+.delete-btn-custom:hover,
+.edit-btn-custom:hover {
   cursor: pointer;
 }
 

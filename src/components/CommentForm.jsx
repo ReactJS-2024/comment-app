@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import Card from "./Card";
 import Button from "./Button";
@@ -6,9 +6,23 @@ import CommentContext from "../context/CommentContext";
 
 function CommentForm() {
 
-    const {onPostComment} = useContext(CommentContext);
+    const {onPostComment, commentEdit, editCommentHandler, cancelChangesHandler} = useContext(CommentContext);
     const [commentText, setCommentText] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
+
+    // rascinjujemo commentEdit objekat na njegove property-e, koje cuvamo kao property-e ove CommentForm komponente
+    const {edit, item} = commentEdit;
+
+    // ! AKO je dependency array useEffect hook-a prazan (2. argument) , useEffect (tj efekat) okida se samo jednom, onda kada se komponenta ucita!
+    // useEffect(() => {
+    //     alert(1);
+    // }, []);
+    useEffect(() => {
+        if (!edit) {
+            return;
+        }
+        setCommentText(item.commentText);
+    }, [commentEdit]);
 
     const handleCommentTextChange = (e) => {
         if (commentText !== '' && commentText.trim().length < 15) {
@@ -26,8 +40,17 @@ function CommentForm() {
             rating: 0,
             commentText
         }
-        onPostComment(newComment);
+        if (edit) {
+            editCommentHandler(item.id, commentText);
+        } else {
+            onPostComment(newComment);
+        }
         setCommentText('');
+    }
+
+    const handleCancelChange = () => {
+        cancelChangesHandler();
+        setCommentText(''); // setujemo na prazan string content forme ako kliknemo na cancel changes
     }
 
     return (
@@ -45,8 +68,15 @@ function CommentForm() {
                     <Button 
                         isDisabled={commentText.trim().length < 15}
                         type={'submit'}
-                        children={'Post Comment'}
+                        children={edit ? 'Update Comment' : 'Post Comment'}
                     />
+                    {
+                        edit && <Button 
+                            onClick={() => handleCancelChange()}
+                            type={'button'}
+                            isDisabled={false}
+                            children={'Cancel changes'}/>
+                    }
                     {/* <button type="submit">Post Comment</button> */}
                 </div>
             </form>
