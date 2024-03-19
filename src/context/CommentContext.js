@@ -1,16 +1,33 @@
-import { createContext, useState } from "react";
-import CommentsMockData from "../mockData/CommentsMockData";
+import { createContext, useEffect, useState } from "react";
 
 const CommentContext = createContext();
 
 export const CommentProvider = ({children}) => {
 
-    const [comments, setComments] = useState(CommentsMockData); // ovde cuvamo stanje (state) SVIH komentara iz mock fajla
+    const [comments, setComments] = useState([]); // ovde cuvamo stanje (state) SVIH komentara iz mock fajla
 
     const [commentEdit, setCommentEdit] = useState({
       item: {},
       edit: false
     });
+
+    useEffect(() => {
+      fetchComments();
+    }, []);
+
+    /**
+     * @description Sends API call for fetching all comments from json server
+     */
+    const fetchComments = async () => {
+      try {
+        const response = await fetch('http://localhost:5001/comments');
+        const data = await response.json();
+        // console.log(data); // * preporuka je da prvo konzol logujete odgovor da vidite da li su podaci koje ocekujete tu
+        setComments(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
 
     /**
      * @description Function for handling click of comment edit icon
