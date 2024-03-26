@@ -11,9 +11,9 @@ function CommentItem({commentData, isOddItem}) {
     const [isCommentLiked, setIsCommentLiked] = useState(false);
     const [isCommentDisliked, setIsCommentDisliked] = useState(false);
 
-    const likeComment = (commentId) => {
+    const likeComment = (commentData) => {
         if (!isCommentLiked) {
-            onLikeComment(commentId);
+            onLikeComment(commentData);
             setIsCommentLiked(true);
             setIsCommentDisliked(false);
         }
@@ -44,7 +44,7 @@ function CommentItem({commentData, isOddItem}) {
                 <button 
                     className="like-btn"
                     disabled={isCommentLiked}
-                    onClick={() => likeComment(commentData.id)}>
+                    onClick={() => likeComment(commentData)}>
                     👍
                 </button>
             </div>

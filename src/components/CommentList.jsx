@@ -3,11 +3,16 @@ import CommentForm from "./CommentForm"
 import CommentItem from "./CommentItem"
 import CommentRating from "./CommentRating"
 import CommentContext from "../context/CommentContext"
+import Spinner from "./Spinner"
 
 
 function CommentList() {
 
     const {comments} = useContext(CommentContext);
+
+    if (comments && !comments.length) {
+        return <Spinner />
+    }
 
     return (
         <ul className="comments-list">

@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from "react";
-import { v4 as uuidv4 } from 'uuid';
+// import { v4 as uuidv4 } from 'uuid';
 import Card from "./Card";
 import Button from "./Button";
 import CommentContext from "../context/CommentContext";
@@ -36,12 +36,12 @@ function CommentForm() {
     const handlePostComment = (e) => {
         e.preventDefault(); // ! prevent-uje (zaustavlja) default ponasanje submit-ovanja standardnih HTML formi
         const newComment = {
-            id: uuidv4(),
-            rating: 0,
+            // id: uuidv4(),  // ! zakomentarisano, jer implementacijom API poziva sada server definise ID, a ne klijentska strana (tj React aplikacija)
+            rating: edit ? item.rating : 0,
             commentText
         }
         if (edit) {
-            editCommentHandler(item.id, commentText);
+            editCommentHandler(item.id, newComment);
         } else {
             onPostComment(newComment);
         }
