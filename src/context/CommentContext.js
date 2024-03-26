@@ -1,3 +1,4 @@
+import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 
 const CommentContext = createContext();
@@ -21,11 +22,19 @@ export const CommentProvider = ({children}) => {
      */
     const fetchComments = async () => {
       try {
-        const response = await fetch('/comments');
-        const data = await response.json();
-        // console.log(data); // * preporuka je da prvo konzol logujete odgovor da vidite da li su podaci koje ocekujete tu
-        setComments(data);
-        setIsLoading(false);
+        // ! STARO resenje - koristeci FETCH API za slanje API poziva
+        // const response = await fetch('/comments');
+        // const data = await response.json();
+
+        // * NOVO resenje - koristeci AXIOS biblioteku
+        const response = await axios.get('/comments');
+        if (response.statusText === 'OK') {
+          const {data} = response;
+          setComments(data);
+          setIsLoading(false);
+        } else {
+          alert('Oops! Something went wrong, please try again.');
+        }
       } catch (error) {
         console.log(error);
       }
@@ -48,16 +57,20 @@ export const CommentProvider = ({children}) => {
      * @param {Object} commentToUpdate - comment to
      */
     const editCommentHandler = async (id, commentToUpdate) => {
-      const response = await fetch(`/comments/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(commentToUpdate)
-      });
+      // ! STARO resenje - koristeci FETCH API za slanje API poziva
+      // const response = await fetch(`/comments/${id}`, {
+      //   method: 'PUT',
+      //   headers: {
+      //     'Content-Type': 'application/json'
+      //   },
+      //   body: JSON.stringify(commentToUpdate)
+      // })
 
-      if (response.ok) {
-        const data = await response.json();
+      // * NOVO resenje - koristeci axios i PUT zahtev
+      const response = await axios.put(`/comments/${id}`, commentToUpdate);
+
+      if (response.statusText === 'OK') {
+        const {data} = response;
         alert('Your comment has been updated.');
         setComments(comments.map((item) => {
           if (item.id === id) {
@@ -113,10 +126,14 @@ export const CommentProvider = ({children}) => {
           return;
         }
         try {
-          const response = await fetch(`/comments/${id}`, {
-            method: 'DELETE'
-          });
-          if (response.ok) {
+          // ! STARO resenje - koristeci FETCH API za slanje API poziva
+          // const response = await fetch(`/comments/${id}`, {
+          //   method: 'DELETE'
+          // });
+
+          // * NOVO resenje - koristeci AXIOS i DELETE metodu
+          const response = await axios.delete(`/comments/${id}`);
+          if (response.statusText === 'OK') {
             alert('You have successfully deleted comment.');
             setComments(currentComments => currentComments.filter(c => c.id !== id));
           } else {
@@ -137,18 +154,24 @@ export const CommentProvider = ({children}) => {
     const onLikeComment = async (commentData) => {
       const {id} = commentData;
       try {
-        const response = await fetch(`/comments/${id}`, {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            rating: commentData.rating + 1
-          })
+        // ! STARO resenje - koristeci FETCH API za slanje API poziva
+        // const response = await fetch(`/comments/${id}`, {
+        //   method: 'PATCH',
+        //   headers: {
+        //     'Content-Type': 'application/json'
+        //   },
+        //   body: JSON.stringify({
+        //     rating: commentData.rating + 1
+        //   })
+        // });
+
+        // * NOVO resenje - koristeci AXIOS i PATCH metodu
+        const response = await axios.patch(`/comments/${id}`, {
+          rating: commentData.rating + 1
         });
 
-        if (response.ok) {
-          const data = await response.json();
+        if (response.statusText === 'OK') {
+          const {data} = response;
           setComments((prevComments) => 
             prevComments.map((comment) => {
               if (comment.id === id) {
@@ -185,18 +208,24 @@ export const CommentProvider = ({children}) => {
     const onDislikeComment = async (commentData) => {
       const {id} = commentData;
       try {
-        const response = await fetch(`/comments/${id}`, {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            rating: commentData.rating - 1
-          })
+        // ! STARO resenje - koristeci FETCH API za slanje API poziva
+        // const response = await fetch(`/comments/${id}`, {
+        //   method: 'PATCH',
+        //   headers: {
+        //     'Content-Type': 'application/json'
+        //   },
+        //   body: JSON.stringify({
+        //     rating: commentData.rating - 1
+        //   })
+        // });
+
+        // * NOVO resenje - koristeci AXIOS i PATCH metodu
+        const response = await axios.patch(`/comments/${id}`, {
+          rating: commentData.rating - 1
         });
 
-        if (response.ok) {
-          const data = await response.json();
+        if (response.statusText === 'OK') {
+          const {data} = response;
           setComments((prevComments) => 
             prevComments.map((comment) => {
               if (comment.id === id) {
@@ -230,15 +259,19 @@ export const CommentProvider = ({children}) => {
      */
     const onPostComment = async (newComment) => {
       try {
-        const response = await fetch('/comments', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(newComment)
-        });
-        if (response.ok) {
-          const data = await response.json(); // lokalni server vraca u body-u podatak o kreiranom komentaru 
+        // ! STARO resenje - koristeci FETCH API za slanje API poziva
+        // const response = await fetch('/comments', {
+        //   method: 'POST',
+        //   headers: {
+        //     'Content-Type': 'application/json'
+        //   },
+        //   body: JSON.stringify(newComment)
+        // });
+
+        // * NOVO resenje - koristeci AXIOS i POST metodu
+        const response = await axios.post('/comments', newComment);
+        if (response.statusText === 'Created') {
+          const {data} = response; // lokalni server vraca u body-u podatak o kreiranom komentaru 
           setComments([data, ...comments]);
           alert('New comment has been succesfully added!');
         } else {
