@@ -180,9 +180,36 @@ export const CommentProvider = ({children}) => {
 
     /**
      * @description Function for handling comment disliking
-     * @param {string} id - id of comment to dislike
+     * @param {Object} commentData - comment that is disliked
      */
-    const onDislikeComment = (id) => {
+    const onDislikeComment = async (commentData) => {
+      const {id} = commentData;
+      try {
+        const response = await fetch(`/comments/${id}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            rating: commentData.rating - 1
+          })
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setComments((prevComments) => 
+            prevComments.map((comment) => {
+              if (comment.id === id) {
+                return data;
+              }
+              return comment;
+            })
+          )
+        }
+      } catch (error) {
+        console.log(error);
+      }
+      /*
         setComments((prevComments) => 
           prevComments.map((comment) => {
             if (comment.id === id) {
@@ -194,6 +221,7 @@ export const CommentProvider = ({children}) => {
             return comment;
           })
         );
+      */
     }
 
     /**

@@ -1,14 +1,14 @@
 {
   "comments": [
     {
-      "rating": 204,
-      "commentText": "Something new from update method. Something added to this comment. Test",
+      "rating": 202,
+      "commentText": "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. ",
       "id": "3"
     },
     {
-      "id": "8790",
       "rating": 0,
-      "commentText": "Novi komentar koji testiram."
+      "commentText": "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.",
+      "id": "8790"
     }
   ]
 }
